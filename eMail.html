@@ -1,0 +1,265 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+<title>to 妍妍</title>
+<meta charset="UTF-8">
+<style>
+body{
+    margin:0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    overflow:hidden;
+    background:url("image/love.webp") no-repeat;
+    background-size: 100% 100%;
+    opacity: 0.85;
+    position: relative;
+}    
+.myHeart{
+    position:relative;
+    width:400px;
+    height:400px;
+    margin:-110px auto 200px;
+    animation: move 2s infinite alternate;
+    display: none;
+    z-index: 555;
+}
+.myHeart:before,
+.myHeart:after{
+    content: '' ;
+    position:absolute;
+    left:60px;
+    top:150px;
+    width:200px;
+    height:320px;
+    background:red;
+    border-radius:100px 100px 0px 0px;
+}
+.myHeart:before{
+    content: '';
+    transform:rotate(-45deg);
+}
+.myHeart:after{
+    content: '';
+    transform: translateX(83px) rotate(45deg);
+    }
+.myHeart p{
+    position: absolute;
+    width: 300px;
+    z-index: 999;
+    left:50px;
+    top:200px;
+    line-height: 28px;
+    text-align: center;
+    font-size: 70px;
+}
+@keyframes move{
+0%{transform:scale(1.1);}
+25%{transform:scale(1.2);}
+50%{transform:scale(1.3);}
+75%{transform:scale(1.2);}
+100%{transform:scale(1.1);}
+}
+.wwh,.zyy{
+ color: red;
+ margin: 0 auto;
+ position: relative;
+ text-align: center;
+ z-index: 1000;
+ font-size: 199px;
+ font-weight: 700;
+ display: none;
+}
+.time{
+ width: 80vw;
+ height: 100vh;
+ padding: 100px 10vw;
+ color: orangered;
+ font-size: 50px;
+ font-weight: 700;
+ z-index: 1000;
+ text-align: center;
+ position: absolute;
+ top:0;
+ left:0;
+ display: none; 
+}
+.date{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 32px;
+    font-weight: bold;
+    display: none;
+}
+</style>   
+</head>  
+<body>
+    <h1 class="wwh">仵文豪</h1>
+    <div class="myHeart">
+        <p>
+            喜欢
+        </p>
+    </div>
+    <div class="time"></div>
+    <h1 class="zyy">张妍妍</h1> 
+    <canvas id="fireworks">
+    </canvas> 
+    <p class="date">
+        <span>ps：这个小网页是用业余时间做了10来个小时完成的，前一页的烟花效果是不是很棒呀，也提前祝你生日快乐，我应该是今年第一个祝福你的吧，这个网页也是作为你生日礼物的一部分，未完待续... </span>
+        <br/>
+        <span>期望给你幸福的人</span>
+        <br/>
+        <span>仵文豪</span>
+        <br/>
+        <span>2022年07月19日</span>
+    </p>
+</body>  
+</html>
+<script type="text/javascript"> 
+    window.onload = function () { 
+        setTimeout(function(){
+            var audio = document.createElement('audio');
+            audio.src = 'image/love.mp3';
+            audio.autoplay = 'autoplay';
+            audio.loop = 'loop';
+            document.body.appendChild(audio)
+        },4000)           
+        fireworks = document.getElementById("fireworks");
+        myHeart = document.querySelector(".myHeart");
+        wwh = document.querySelector(".wwh");
+        zyy = document.querySelector(".zyy");
+        time = document.querySelector(".time"); 
+        date = document.querySelector(".date"); 
+        fws = fireworks.getContext("2d"); 
+        fwsWidth = fireworks.width = window.innerWidth; 
+        fwsHeight = fireworks.height = window.innerHeight; 
+        fws.fillRect(0, 0, fwsWidth, fwsHeight); 
+        fws.globalCompositeOperation = "lighter"; 
+        fws.lineWidth = 0.2; 
+        fws.lineCap = "round";       
+        var bool = 0, radius = 0,angle = 0;
+        fireworks.onmousemove = function (event) {  
+            if (window.fwsTime) {  
+                if (fwsRandom == 9) { 
+                    fwsRandom = Math.random() * 15; 
+                    fwsCallback(1); 
+                }  
+                clearTimeout(fwsTime);  
+            }  
+            beforeX = event.pageX; 
+            beforeY = event.pageY;  
+            presentX = beforeX, 
+            presentY = beforeY;
+            startX = 0; 
+            startY = 0; 
+            XW = (event.pageX / fwsWidth * 999 >> 0) / 999; 
+            YH = (event.pageY / fwsHeight * 999 >> 0) / 999; 
+            angle = event.pageX / fwsHeight * 360 >> 0; 
+            fwsRandom = 9; 
+            circle = 360 * Math.PI / 180; 
+            fwsTime = setInterval(fwsCallback = function (event) {  
+                fws.save(); 
+                fws.globalCompositeOperation = "source-over"; 
+                if (event != 1) { 
+                    fws.fillStyle = "rgba(0,0,0,0.02)"; 
+                    fws.fillRect(0, 0, fwsWidth, fwsHeight); 
+                }  
+                fws.restore(); 
+                ring = 25; 
+                while (ring--) {  
+                    fws.beginPath(); 
+                    if (fwsRandom > 450 || bool) {  
+                        if (!bool) { 
+                            bool = 1; 
+                        }  
+                        if (fwsRandom < 0.1) { 
+                            bool = 0; 
+                        }  
+                        radius -= circle; 
+                        fwsRandom -= 0.1;  
+                    }  
+                    if (!bool) { 
+                        radius += circle; 
+                        fwsRandom += 0.1; 
+                    }  
+                    q = (XW / YH - 1) * radius; 
+                    endX = (XW - YH) * Math.cos(radius) + fwsRandom * Math.cos(q) + (presentX + (beforeX - presentX) * (ring / 25)) + (YH - XW); 
+                    endY = (XW - YH) * Math.sin(radius) - fwsRandom * Math.sin(q) + (presentY + (beforeY - presentY) * (ring / 25)); 
+                    if (startX) { 
+                        fws.moveTo(startX, startY); 
+                        fws.lineTo(endX, endY) 
+                    }  
+                    fws.strokeStyle = "hsla(" + (angle % 360) + ",100%,50%,0.75)"; 
+                    fws.stroke(); 
+                    startX = endX; 
+                    startY = endY;  
+                }  
+                angle -= 0.5;
+                presentX = beforeX; 
+                presentY = beforeY;  
+            }, 16);  
+        }  
+        document.onkeydown = function (event) { 
+            startX = startY = 0; 
+            XW += 0.05 
+        }
+        var num = 0;
+        var jump = 0;
+        var timeUp = 240;
+        var content = '';
+        var text1 = `致妍妍,很幸运地在今年生日前与你相识,其实我是一个不善于表达自己情感的人,此刻的我也是忐忑不安的,不知道以这种表达方式,向你传达我的爱慕之情是否妥当,诚恳的希望你能看完,这些发自肺腑的言语`
+        var text2 = `妍妍,第一次见面,对你的印象真的很不错,虽然不知道你对我的感觉和印象怎么样,但我见到你后,我的心跳已经不受自己控制了,我能感觉到你就是我一直寻找的,理想中的另一半,遇见你也是我今年生日最好的礼物,今年七夕节要不要一起过呀,妍妍，我喜欢你,做我女朋友吧！`
+        var split1 = text1.split('').reverse()
+        var split2 = text2.split('').reverse()
+        var timer = setInterval(()=>{
+            timeUp--;
+            if(timeUp<232){
+                time.style.display = 'block'
+                if (timeUp>9) {
+                    if (timeUp>=138) {
+                        if(split1[timeUp-138] === ','){
+                            split1[timeUp-138] = '<br>'
+                        }
+                        content += split1[timeUp-138]
+                    } 
+                    if(timeUp<138 && timeUp>136) {
+                        content = content
+                    }
+                    if(timeUp === 136) {
+                        content = ''
+                    }
+                    if (timeUp<136){
+                        if(split2[timeUp-10] === ','){
+                            split2[timeUp-10] = '<br>'
+                        }
+                        content += split2[timeUp-10]
+                    } 
+                  console.log(content);
+                    time.innerHTML = content 
+                } 
+                if (timeUp<10) {
+                  content = Math.ceil(timeUp/2)
+                  console.log(content);
+                    time.innerHTML = content 
+                } 
+            }
+            if (timeUp<0) {
+                fireworks.style.display = 'none'
+                time.style.display = 'none'
+                myHeart.style.display = 'block'
+                wwh.style.display = 'block'
+                zyy.style.display = 'block'
+                date.style.display = 'block'
+                clearInterval(timer)
+            }
+            num = Math.floor(Math.random()*(window.innerWidth))
+            jump = Math.floor(Math.random()*(window.innerHeight))
+            console.log(num,jump,timeUp);
+            fireworks.onmousemove({ 
+            pageX: num, 
+            pageY: jump 
+        })
+        },400)
+    }
+</script>  
